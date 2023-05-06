@@ -13,7 +13,6 @@
             }
         }
     }
-}
         stage('Test') {
             agent {
                 docker {
@@ -21,7 +20,7 @@
                 }
             }
             steps {
-                sh 'pytest -v --junit-xml test-reports/results.xml sources/test_calc.py'
+                sh 'pytest -v --junit-xml test-reports/results.xml sources/t>
             }
             post {
                 always {
@@ -29,7 +28,6 @@
                 }
             }
         }
-
         stage('Deliver') {
             agent any
             environment {
@@ -39,7 +37,7 @@
             steps {
                 dir(path: env.BUILD_ID) {
                     unstash(name: 'compiled-results')
-                    sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F prog.py'"
+                    sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller ->
                 }
             }
             post {
@@ -48,3 +46,7 @@
                 }
             }
         }
+
+
+}
+
