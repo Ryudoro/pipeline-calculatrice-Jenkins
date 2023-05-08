@@ -13,6 +13,5 @@ pipeline {
             }
         }
     }
-}	pipeline {
-    agent none
+}
 }
