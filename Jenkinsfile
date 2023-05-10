@@ -1,4 +1,4 @@
-	pipeline {
+pipeline {
     agent none
     stages {
         stage('Build') {
@@ -12,7 +12,6 @@
                 stash(name: 'compiled-results', includes: 'sources/*.py*')
             }
         }
-    }
         stage('Test') {
             agent {
                 docker {
@@ -20,7 +19,7 @@
                 }
             }
             steps {
-                sh 'pytest -v --junit-xml test-reports/results.xml sources/t>
+                sh 'pytest -v --junit-xml test-reports/results.xml sources/test_calc.py'
             }
             post {
                 always {
@@ -37,7 +36,7 @@
             steps {
                 dir(path: env.BUILD_ID) {
                     unstash(name: 'compiled-results')
-                    sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller ->
+                    sh "docker run --rm -v ${VOLUME} ${IMAGE} 'pyinstaller -F prog.py'"
                 }
             }
             post {
@@ -51,8 +50,7 @@
             steps {
                 echo 'nom-de-la-branche'
             }
-        }	
-
-
+        }
+    }
 }
 
